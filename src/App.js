@@ -16,7 +16,7 @@ class App extends Component {
      this.state = {
        track: {stream_url: '', title: '', artwork_url: ''},
        tracks: [],
-       playStatus: Sound.status.STOPPED,
+       playStatus: Sound.status.PLAYING,
        elapsed: '00:00',
        total: '00:00',
        position: 0,
@@ -132,7 +132,16 @@ class App extends Component {
       rgba(0, 0, 0, 0.7)
     ),   url(${this.xlArtwork(this.state.track.artwork_url)})`
     }
+    const player = {
+      width: '100px',
+      height: '100px',
+      backgroundImage:`linear-gradient(
+      rgba(0, 0, 0, 0.7),
+      rgba(0, 0, 0, 0.7)
+    ),   url(${this.xlArtwork(this.state.track.artwork_url)})`
+    }
     return (
+      <div>
       <div className="scotch_music" style={scotchStyle}>
         <Search
           clientId={this.state.client_id}
@@ -154,11 +163,27 @@ class App extends Component {
           playStatus={this.state.playStatus}
           forward={this.forward.bind(this)}
           backward={this.backward.bind(this)}
-          random={this.randomTrack.bind(this)}/>
+          random={this.randomTrack.bind(this)}
+          backgroundImage = {this.state.track.artwork_url}/>
         <Progress
           elapsed={this.state.elapsed}
           total={this.state.total}
           position={this.state.position}/>
+      </div>
+
+      <div style={player}>
+
+        <Player
+          togglePlay={this.togglePlay.bind(this)}
+          stop={this.stop.bind(this)}
+          playStatus={this.state.playStatus}
+          forward={this.forward.bind(this)}
+          backward={this.backward.bind(this)}
+          random={this.randomTrack.bind(this)}
+          backgroundImage = {this.state.track.artwork_url}
+          />
+
+        </div>
       </div>
     );
   }
