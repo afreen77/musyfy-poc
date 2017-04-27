@@ -43,6 +43,3 @@ class Player extends React.Component {
 }
 
 export default Player
-
-
-// <button onClick={this.props.random}><i className="fa fa-random"></i></button>

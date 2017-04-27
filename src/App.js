@@ -13,13 +13,21 @@ class App extends Component {
   constructor(props) {
      super(props);
      this.client_id = '2f98992c40b8edf17423d93bda2e04ab';
+     let elapsed_time = ''
+     let position = 0;
+     if(localStorage.getItem("elapsed_time")){
+        elapsed_time = localStorage.getItem("elapsed_time");
+        position = localStorage.getItem("position");
+      }else{
+        elapsed_time = '00:00'
+     }
      this.state = {
        track: {stream_url: '', title: '', artwork_url: ''},
        tracks: [],
        playStatus: Sound.status.PLAYING,
-       elapsed: '00:00',
+       elapsed: elapsed_time,
        total: '00:00',
-       position: 0,
+       position: position ,
        playFromPosition: 0,
        autoCompleteValue: ''
      };
@@ -96,6 +104,8 @@ class App extends Component {
   }
 
   handleSongPlaying(audio){
+    localStorage.setItem("position",(audio.position / audio.duration))
+    localStorage.setItem("elapsed_time",this.formatMilliseconds(audio.position))
      this.setState({  elapsed: this.formatMilliseconds(audio.position),
                       total: this.formatMilliseconds(audio.duration),
                       position: audio.position / audio.duration })
