@@ -105,6 +105,10 @@ class App extends Component {
     this.randomTrack();
    }
 
+  newWindow() {
+    window.open('http://www.facebook.com/sharer.php?s=100&p[title]=Fb Share&p[summary]=Facebook share popup&p[url]=javascript:fbShare("http://jsfiddle.net/stichoza/EYxTJ/")&p[images][0]="http://goo.gl/dS52U"', 'sharer', 'toolbar=0,status=0,width=548,height=325');
+  }
+
   randomTrack () {
     let _this = this;
     //Request for a playlist via Soundcloud using a client id
@@ -113,7 +117,7 @@ class App extends Component {
         // Store the length of the tracks
         const trackLength = response.data.tracks.length;
         // Pick a random number
-        const randomNumber = Math.floor((Math.random() * trackLength) + 1);
+        const randomNumber = 1;
         //Set the track state with a random track from the playlist
         _this.setState({track: response.data.tracks[randomNumber]});
       })
@@ -146,6 +150,7 @@ class App extends Component {
            onPlaying={this.handleSongPlaying.bind(this)}
            playFromPosition={this.state.playFromPosition}
            onFinishedPlaying={this.handleSongFinished.bind(this)}/>
+          }
         <Player
           togglePlay={this.togglePlay.bind(this)}
           stop={this.stop.bind(this)}
