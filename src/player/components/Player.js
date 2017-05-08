@@ -28,7 +28,7 @@ class Player extends React.Component {
           <div className="button-play">
           
           <div className="player__main">
-            <button onClick={this.props.togglePlay}><i className={playPauseClass}></i></button>
+            <button onClick={this.props.openWindow}><i className={playPauseClass}></i></button>
             </div>
 
           </div>

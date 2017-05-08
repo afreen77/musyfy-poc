@@ -24,7 +24,7 @@ class App extends Component {
      this.state = {
        track: {stream_url: '', title: '', artwork_url: ''},
        tracks: [],
-       playStatus: Sound.status.PLAYING,
+       playStatus: Sound.status.PAUSED,
        elapsed: elapsed_time,
        total: '00:00',
        position: position ,
@@ -115,8 +115,25 @@ class App extends Component {
     this.randomTrack();
    }
 
+
+
   newWindow() {
-    window.open('http://www.facebook.com/sharer.php?s=100&p[title]=Fb Share&p[summary]=Facebook share popup&p[url]=javascript:fbShare("http://jsfiddle.net/stichoza/EYxTJ/")&p[images][0]="http://goo.gl/dS52U"', 'sharer', 'toolbar=0,status=0,width=548,height=325');
+    this.togglePlay();
+    if (sessionStorage.status != "play") {                
+      sessionStorage.status = "play";         
+      var myWindow = window.open("", "popup", "width=150,height=200");
+      myWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">');
+      myWindow.document.write('<link href="https://fonts.googleapis.com/css?family=Exo+2:500" rel="stylesheet">');
+      // myWindow.document.write('<link href="http://localhost/newplug/static/css/main.css" rel="stylesheet">');
+      myWindow.document.write('<link href="https://s3.ap-south-1.amazonaws.com/musyfy/newplug-v01/static/css/main.css" rel="stylesheet">');
+      myWindow.document.write("<p><div id='container'></div></p>");
+      // myWindow.document.write('<script type="text/javascript" src="http://localhost/newplug/static/js/main.js"><\/script>');
+      myWindow.document.write('<script type="text/javascript" src="http://s3.ap-south-1.amazonaws.com/musyfy/newplug-v01/static/js/main.js"><\/script>');
+      
+    }
+
+
+    
   }
 
   randomTrack () {
@@ -152,29 +169,19 @@ class App extends Component {
     }
     return (
       <div>
-
       <div style={player}>
-        <Sound
-           url={this.prepareUrl(this.state.track.stream_url)}
-           playStatus={this.state.playStatus}
-           onPlaying={this.handleSongPlaying.bind(this)}
-           playFromPosition={this.state.playFromPosition}
-           onFinishedPlaying={this.handleSongFinished.bind(this)}/>
-          }
+        
         <Player
           togglePlay={this.togglePlay.bind(this)}
           stop={this.stop.bind(this)}
           playStatus={this.state.playStatus}
+          openWindow={this.newWindow.bind(this)}
           forward={this.forward.bind(this)}
           backward={this.backward.bind(this)}
           random={this.randomTrack.bind(this)}
           backgroundImage = {this.state.track.artwork_url}
           />
-          <Progress
-          elapsed={this.state.elapsed}
-          total={this.state.total}
-          position={this.state.position}/>
-
+          
         </div>
       </div>
     );
